@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Мобильные устройства Xiaomi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <style>
+        .categoryOfMobileDevices a {
+            color: black;
+            text-decoration: none;
+        }
+        .categoryOfMobileDevices a:hover {
+            color: #ff6900;
+            text-decoration: underline;
+        }
+        .btn {
+            margin-top: 1px;
+            margin-bottom: 1px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation menu -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a th:href="@{/}" class="navbar-brand p-0">
+            <img src="images/logo/logo.png" width="30px" height="30px">
+            Xiaomi
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav me-auto nb-2">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <span style="color:#fff">Мобильные устройства</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a th:href="@{/smarthouse}" class="nav-link">
+                        <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Умные устройства</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a th:href="@{/audio}" class="nav-link">
+                        <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Аудио</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a th:href="@{/mi-tv}" class="nav-link">
+                        <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Mi TV</span>
+                    </a>
+                </li>
+            </ul>
+            <div sec:authorize="!isAuthenticated()" class="d-flex">
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#authorizationForm">Войти</button>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                <span sec:authentication="name" class="text-white fw-bolder me-5 float-end"></span>
+            </div>
+            <form sec:authorize="isAuthenticated()" method="POST" th:action="@{/logout}" class="d-flex" id="logoutButton">
+                <button type="submit" class="btn btn-outline-danger">Выйти</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<!-- End of navigation menu -->
+
+<!-- Authorization form -->
+<div class="modal fade" id="authorizationForm" tabindex="-1" aria-hidden="true" aria-labelledby="authFormLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="authFormLabel">Авторизация</h5>
+                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pb-2">
+                <form method="POST" th:action="@{/login}" id="loginForm">
+                    <div class="row mb-3">
+                        <label for="inputLogin" class="col-sm-2 col-form-label">Логин:</label>
+                        <div class="col-sm-9 ms-4">
+                            <input type="text" class="form-control" id="inputLogin" name="username">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Пароль:</label>
+                        <div class="col-sm-9 ms-4">
+                            <input type="password" class="form-control" id="inputPassword" name="password">
+                        </div>
+                    </div>
+                    <div class="row border-top mb-0 p-0">
+                        <div class="mt-2">
+                            <a th:href="@{/registration}" class="ms-1" style="font-size: small">Зарегистрировать аккаунт</a>
+                            <button type="submit" class="btn btn-outline-success float-end">Войти</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main -->
+<main>
+    <div class="container">
+        <div class="row" style="margin-top: 70px">
+            <ul class="nav nav-tabs text-center" id="devicesNav">
+
+                <li class="nav-item col-4 categoryOfMobileDevices">
+                    <a class="nav-link active" href="#smartphones" data-bs-toggle="tab">
+                        <img src="images/mobile-devices/smartphones.jpg" class="w-100">
+                        Смартфоны
+                    </a>
+                </li>
+                <li class="nav-item col-4 categoryOfMobileDevices">
+                    <a class="nav-link" href="#pads" data-bs-toggle="tab">
+                        <img src="images/mobile-devices/pads.jpg" class="w-100">
+                        Планшеты
+                    </a>
+                </li>
+                <li class="nav-item col-4 categoryOfMobileDevices">
+                    <a class="nav-link" href="#notebooks" data-bs-toggle="tab">
+                        <img src="images/mobile-devices/notebooks.jpg" class="w-100">
+                        Ноутбуки
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content border-start border-end" id="devicesContent">
+
+                <!-- Smartphones -->
+                <div class="tab-pane active" id="smartphones">
+                    <div class="accordion accordion-flush m-0"  id="smartphonesAccordion">
+
+                        <!-- Xiaomi Mi-A3 -->
+                        <div class="accordion-item mt-2">
+                            <h2 class="accordion-header" id="XiaomiMiA3">
+                                <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#XiaomiMiA3-Body" aria-expanded="false" aria-controls="collapseTwo">
+                                    <img src="images/mobile-devices/smartphones/Mi-A3/Top-Mi-A3.jpg" class="w-100">
+                                </button>
+                            </h2>
+                            <div id="XiaomiMiA3-Body" class="accordion-collapse collapse" aria-labelledby="headingMiA3" data-bs-parent="#accordionExample">
+                                <div class="accordion-body p-0">
+                                    <div class="row">
+                                        <img src="images/mobile-devices/smartphones/Mi-A3/Advantages-Mi-A3.jpg" class="w-100">
+                                    </div>
+                                    <div class="row mt-2">
+                                        <h3 class="text-center">Основные характеристики</h3>
+                                        <div class="col-4">
+                                            <img src="images/mobile-devices/smartphones/Mi-A3/Specification-Mi-A3.png" class="w-100">
+                                        </div>
+                                        <div class="col-8 align-self-center">
+                                            <ul>
+                                                <li><b>Процессор:</b> Snapdragon 665 (8 ядер)</li>
+                                                <li><b>Графика:</b> GPU Adreno 610</li>
+                                                <li><b>Дисплей:</b> Super AMOLED 6,1″, 1560×720 пикселей, 60 Гц</li>
+                                                <li><b>Основная камера:</b> 48 Мп + 8 Мп + 2 Мп, автофокус, 4K@30 fps</li>
+                                                <li><b>Фронтальная камера:</b> 32 Мп</li>
+                                                <li><b>Оперативная память:</b> 4 ГБ</li>
+                                                <li><b>Внутренняя память:</b> 64/128 ГБ</li>
+                                                <li><b>Поддержка microSD:</b> до 256 ГБ</li>
+                                                <li><b>Поддержка Nano-SIM:</b> 2 шт.</li>
+                                                <li><b>Поддержка NFC:</b> Нет</li>
+                                                <li><b>Сканер отпечатков пальцев под экраном</b></li>
+                                                <li><b>Аккумулятор:</b> 4030 мА·ч, быстрая зарядка 18 Вт</li>
+                                                <li><b>USB 2.0 Type-C</b></li>
+
+                                                <li><b>Размеры:</b> 153×72×8,5 мм</li>
+                                                <li><b>Масса:</b> 174 г</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-1 mx-1">
+                                    <a class="btn btn-outline-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+                                    <a class="btn btn-outline-info" href="https://www.ixbt.com/mobile/xiaomi-mi-a3-review.html">Обзор</a>
+
+
+                                    <button class="btn btn-outline-info mb-3 w-100" data-bs-toggle="collapse" href="#commentsForMiA3">
+                                        Обсуждение и комментарии
+                                    </button>
+                                    <div class="collapse" id="commentsForMiA3">
+                                        <div class="card card-body mb-3">
+                                            <div th:each="comment : ${MiA3}">
+                                                <div class="border my-2 bg-light">
+                                                    <div th:text="${comment.getUser().getFirstname()}" class="fw-bold mx-2">Firstname Lastname</div>
+                                                    <div th:text="${comment.getMessage()}" class="mx-2">Тело комментария</div>
+                                                </div>
+                                            </div>
+                                            <div sec:authorize="!isAuthenticated()">Необходимо зарегистрироваться, чтобы оставлять комментарии.</div>
+                                            <div sec:authorize="isAuthenticated()">
+
+                                                <form method="POST" th:action="@{/mobile-devices}" th:object="${newComment}">
+                                                    <div>
+                                                        <input type="hidden" value="Mi A3" name="productName">
+                                                        <textarea th:field="*{message}" rows="7" maxlength="700" minlength="5" placeholder="Напишите текст комментария здесь"
+                                                            class="px-2" style="width: 100%"></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-outline-info float-end">Отправить</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Xiaomi 11T -->
+                        <div class="accordion-item mt-2">
+                            <h2 class="accordion-header" id="Xiaomi11T">
+                                <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#Xiaomi11T-Body" aria-expanded="false" aria-controls="collapseOne">
+                                    <img src="images/mobile-devices/smartphones/11T/Top-xiaomi-11T.jpg" class="w-100">
+                                </button>
+                            </h2>
+                            <div id="Xiaomi11T-Body" class="accordion-collapse collapse" aria-labelledby="heading11T" data-bs-parent="#accordionExample">
+                                <div class="accordion-body p-0">
+                                    <div class="row">
+                                        <img src="images/mobile-devices/smartphones/11T/Advantages-11T.jpg" class="w-100">
+                                    </div>
+                                    <div class="row mt-2">
+                                        <h3 class="text-center">Основные характеристики</h3>
+                                        <div class="col-4">
+                                            <img src="images/mobile-devices/smartphones/11T/Specification-11T.png" class="w-100">
+                                        </div>
+                                        <div class="col-8 align-self-center">
+                                            <ul>
+                                                <li><b>Процессор:</b> Snapdragon 888 5G (8 ядер)</li>
+                                                <li><b>Графика:</b> GPU Adreno 660</li>
+                                                <li><b>Дисплей:</b> AMOLED 6,67″, 1080×2400 пикселей, 120 Гц</li>
+                                                <li><b>Основная камера:</b> 108 Мп + 8 Мп + 5 Мп, видео 8K</li>
+                                                <li><b>Фронтальная камера:</b> 16 Мп</li>
+                                                <li><b>Оперативная память:</b> 8/12 ГБ</li>
+                                                <li><b>Внутренняя память:</b> 128/256 ГБ</li>
+                                                <li><b>Поддержка microSD:</b> Нет</li>
+                                                <li><b>Поддержка Nano-SIM:</b> 2 шт.</li>
+                                                <li><b>Поддержка NFC:</b> Есть</li>
+                                                <li><b>Сканер отпечатков пальцев сбоку</b></li>
+                                                <li><b>Защита:</b> IP53</li>
+                                                <li><b>Аккумулятор:</b> 5000 мА·ч, зарядка 120 Вт</li>
+                                                <li><b>USB 2.0 Type-C</b></li>
+
+                                                <li><b>Размеры:</b> 164×77×8,8 мм</li>
+                                                <li><b>Масса:</b> 204 г</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-1 mx-1">
+                                    <a class="btn btn-outline-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+                                    <a class="btn btn-outline-info" href="https://www.ixbt.com/mobile/xiaomi-11t-pro-review.html">Обзор</a>
+
+
+                                    <button class="btn btn-outline-info mb-3 w-100" data-bs-toggle="collapse" href="#commentsFor11TPro">
+                                        Обсуждение и комментарии
+                                    </button>
+                                    <div class="collapse" id="commentsFor11TPro">
+                                        <div class="card card-body mb-3">
+                                            <div th:each="comment : ${Mi11T}">
+                                                <div class="border my-2 bg-light">
+                                                    <div th:text="${comment.getUser().getFirstname()}" class="fw-bold mx-2">Firstname Lastname</div>
+                                                    <div th:text="${comment.getMessage()}" class="mx-2">Тело комментария</div>
+                                                </div>
+                                            </div>
+                                            <div sec:authorize="!isAuthenticated()">Необходимо зарегистрироваться, чтобы оставлять комментарии.</div>
+                                            <div sec:authorize="isAuthenticated()">
+                                                <form method="POST" th:action="@{/mobile-devices}" th:object="${newComment}">
+                                                    <div>
+                                                        <input type="hidden" value="Mi 11T" name="productName">
+                                                        <textarea th:field="*{message}" rows="7" maxlength="700" minlength="5" placeholder="Напишите текст комментария здесь"
+                                                                  class="px-2" style="width: 100%"></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-outline-info float-end">Отправить</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Redmi Note 11 -->
+                        <div class="accordion-item mt-2">
+                            <h2 class="accordion-header" id="RedmiNote11">
+                                <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#RedmiNote11-Body" aria-expanded="false" aria-controls="collapseTwo">
+                                    <img src="images/mobile-devices/smartphones/Redmi-Note-11/Top-redmi-note-11.jpg" class="w-100">
+                                </button>
+                            </h2>
+                            <div id="RedmiNote11-Body" class="accordion-collapse collapse" aria-labelledby="headingRedmiNote11" data-bs-parent="#accordionExample">
+                                <div class="accordion-body p-0">
+                                    <div class="row">
+                                        <img src="images/mobile-devices/smartphones/Redmi-Note-11/Advantages-Redmi-Note-11.jpg" class="w-100">
+                                    </div>
+                                    <div class="row mt-2">
+                                        <h3 class="text-center">Основные характеристики</h3>
+                                        <div class="col-4">
+                                            <img src="images/mobile-devices/smartphones/Redmi-Note-11/Specification-Redmi-Note-11.jpg" class="w-100">
+                                        </div>
+                                        <div class="col-8 align-self-center">
+                                            <ul>
+                                                <li><b>Процессор:</b> Snapdragon 680 4G (8 ядер)</li>
+                                                <li><b>Графика:</b> Adreno 610</li>
+                                                <li><b>Дисплей:</b> AMOLED 6.43", 2400x1080 пикселей, 90 Гц</li>
+                                                <li><b>Основная камера:</b> 50Мп + 8 Мп</li>
+                                                <li><b>Фронтальная камера:</b> 13 Мп</li>
+                                                <li><b>Оперативная память:</b> 4/6 ГБ</li>
+                                                <li><b>Внутренняя память:</b> 64/128 ГБ</li>
+                                                <li><b>Поддержка microSD:</b> до 1 ТБ</li>
+                                                <li><b>Поддержка NFC:</b> Есть</li>
+                                                <li><b>Сканер отпечатков пальцев сбоку</b></li>
+                                                <li><b>Защита:</b> IP53 (от пыли и брызг)</li>
+                                                <li><b>Аккумулятор:</b> 5000 мАч, быстрое зарядное устройство 67 Вт</li>
+                                                <li><b>USB 2.0 Type-C</b></li>
+
+                                                <li><b>Размеры:</b> 159.9 x 73.9 x 8.1 мм</li>
+                                                <li><b>Масса:</b> 179 г</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-1 mx-1">
+                                    <a class="btn btn-outline-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+                                    <a class="btn btn-outline-info" href="https://www.ixbt.com/live/mobile/obzor-smartfona-xiaomi-redmi-note-11-pro-5g-globalnoy-versii-do-starta-prodazh.html">Обзор</a>
+
+
+                                    <button class="btn btn-outline-info mb-3 w-100" data-bs-toggle="collapse" href="#commentsForRedmiNote11">
+                                        Обсуждение и комментарии
+                                    </button>
+                                    <div class="collapse" id="commentsForRedmiNote11">
+                                        <div class="card card-body mb-3">
+                                            <div>
+                                                <div th:each="comment : ${RedmiNote11}">
+                                                    <div class="border my-2 bg-light">
+                                                        <div th:text="${comment.getUser().getFirstname()}" class="fw-bold mx-2">Firstname Lastname</div>
+                                                        <div th:text="${comment.getMessage()}" class="mx-2">Тело комментария</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div sec:authorize="!isAuthenticated()">Необходимо зарегистрироваться, чтобы оставлять комментарии.</div>
+                                            <div sec:authorize="isAuthenticated()">
+                                                <form method="POST" th:action="@{/mobile-devices}" th:object="${newComment}">
+                                                    <div>
+                                                        <input type="hidden" value="Redmi Note 11" name="productName">
+                                                        <textarea th:field="*{message}" rows="7" maxlength="700" minlength="5" placeholder="Напишите текст комментария здесь"
+                                                                  class="px-2" style="width: 100%"></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-outline-info float-end">Отправить</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Xiaomi 11 -->
+                        <div class="accordion-item mt-2">
+                            <h2 class="accordion-header" id="Xiaomi11">
+                                <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#Xiaomi11-Body" aria-expanded="false" aria-controls="collapseTwo">
+                                    <img src="/images/mobile-devices/smartphones/11/Top-xiaomi-11.jpg" class="w-100">
+                                </button>
+                            </h2>
+                            <div id="Xiaomi11-Body" class="accordion-collapse collapse" aria-labelledby="heading11" data-bs-parent="#accordionExample">
+                                <div class="accordion-body p-0">
+                                    <div class="row">
+                                        <img src="images/mobile-devices/smartphones/11/Advantages-11.jpg" class="w-100">
+                                    </div>
+                                    <div class="row mt-2">
+                                        <h3 class="text-center">Основные характеристики</h3>
+                                        <div class="col-4">
+                                            <img src="images/mobile-devices/smartphones/11/Specification-11.jpg" class="w-100">
+                                        </div>
+                                        <div class="col-8 align-self-center">
+                                            <ul>
+                                                <li><b>Процессор:</b> Snapdragon 888 5G (8 ядер)</li>
+                                                <li><b>Графика:</b> GPU Adreno 660</li>
+                                                <li><b>Дисплей:</b> AMOLED 6,81″, 1440×3200 пикселей, 120 Гц</li>
+                                                <li><b>Основная камера:</b> 108 Мп + 13 Мп + 5 Мп, видео 8K</li>
+                                                <li><b>Фронтальная камера:</b> 20 Мп</li>
+                                                <li><b>Оперативная память:</b> 8/12 ГБ</li>
+                                                <li><b>Внутренняя память:</b> 128/256 ГБ</li>
+                                                <li><b>Поддержка microSD:</b> нет</li>
+                                                <li><b>Поддержка Nano-SIM:</b> 2 шт.</li>
+                                                <li><b>Поддержка NFC:</b> Есть</li>
+                                                <li><b>Сканер отпечатков пальцев под экраном (оптический)</b></li>
+                                                <li><b>Защита:</b> IPX8</li>
+                                                <li><b>Аккумулятор:</b> 4600 мА·ч, зарядка 55 Вт, беспроводная зарядка</li>
+                                                <li><b>USB 2.0 Type-C</b></li>
+
+                                                <li><b>Размеры:</b> 164×75×8 мм</li>
+                                                <li><b>Масса:</b> 196 г</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-1 mx-1">
+                                    <a class="btn btn-outline-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+                                    <a class="btn btn-outline-info" href="https://www.ixbt.com/mobile/xiaomi-mi-11-review.html">Обзор</a>
+
+
+                                    <button class="btn btn-outline-info mb-3 w-100" data-bs-toggle="collapse" href="#commentsForMi11">
+                                        Обсуждение и комментарии
+                                    </button>
+                                    <div class="collapse" id="commentsForMi11">
+                                        <div class="card card-body mb-3">
+                                            <div>
+                                                <div th:each="comment : ${Mi11}">
+                                                    <div class="border my-2 bg-light">
+                                                        <div th:text="${comment.getUser().getFirstname()}" class="fw-bold mx-2">Firstname Lastname</div>
+                                                        <div th:text="${comment.getMessage()}" class="mx-2">Тело комментария</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div sec:authorize="!isAuthenticated()">Необходимо зарегистрироваться, чтобы оставлять комментарии.</div>
+                                            <div sec:authorize="isAuthenticated()">
+                                                <form method="POST" th:action="@{/mobile-devices}" th:object="${newComment}">
+                                                    <div>
+                                                        <input type="hidden" value="Mi 11" name="productName">
+                                                        <textarea th:field="*{message}" rows="7" maxlength="700" minlength="5" placeholder="Напишите текст комментария здесь"
+                                                                  class="px-2" style="width: 100%"></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-outline-info float-end">Отправить</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pads -->
+                <div class="tab-pane" id="pads">
+                    <div class="accordion accordion-flush m-0"  id="padsAccordion">
+                        <!--Xiaomi Pad 5 -->
+                        <div class="accordion-item mt-2">
+                            <h2 class="accordion-header" id="XiaomiPad5">
+                                <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#XiaomiPad5-Body" aria-expanded="false" aria-controls="collapseOne">
+                                    <img src="images/mobile-devices/pads/Pad5/Top-xiaomi-pad5.jpg" class="w-100">
+                                </button>
+                            </h2>
+                            <div id="XiaomiPad5-Body" class="accordion-collapse collapse" aria-labelledby="headingPad5" data-bs-parent="#accordionExample">
+                                <div class="accordion-body p-0">
+                                    <div class="row">
+                                        <img src="images/mobile-devices/pads/Pad5/Advantages-Pad5.jpg" class="w-100">
+                                    </div>
+                                    <div class="row mt-2">
+                                        <h3 class="text-center">Основные характеристики</h3>
+                                        <div class="col-4">
+                                            <img src="images/mobile-devices/pads/Pad5/Specification-Pad5.jpg" class="w-100">
+                                        </div>
+                                        <div class="col-8 align-self-center">
+                                            <ul>
+                                                <li><b>Процессор:</b> Qualcomm Snapdragon 860 (8 ядер)</li>
+                                                <li><b>Графика:</b> Adreno 640</li>
+                                                <li><b>Дисплей:</b> IPS 11" WQHD+, 2560 x 1600 пикселей, 120 Гц. Поддержка HDR 10 и Dolby Vision</li>
+                                                <li><b>Основная камера:</b> 13 Мп, автофокус, 4К видео</li>
+                                                <li><b>Фронтальная камера:</b> 8 Мп</li>
+                                                <li><b>Оперативная память:</b> 6 Гб</li>
+                                                <li><b>Внутренняя память:</b> 128/256 Гб</li>
+                                                <li><b>Звук:</b> 4 динамика, объемный звук Dolby Atmos, 24 бит/192 КГц</li>
+                                                <li><b>Аккумулятор:</b> 8720 мАч с поддержкой быстрой зарядки</li>
+
+                                                <li><b>Размеры:</b> 254.7x166.3x6.9 мм</li>
+                                                <li><b>Вес:</b> 511 г</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-1 mx-1">
+                                    <a class="btn btn-outline-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+                                    <a class="btn btn-outline-info" href="https://www.ixbt.com/live/mobilepc/xiaomi-pad-5-podrobnyy-obzor-flagmanskogo-multimediynogo-plansheta-novyy-car-gory.html">Обзор</a>
+
+
+                                    <button class="btn btn-outline-info mb-3 w-100" data-bs-toggle="collapse" href="#commentsForPad5">
+                                        Обсуждение и комментарии
+                                    </button>
+                                    <div class="collapse" id="commentsForPad5">
+                                        <div class="card card-body mb-3">
+                                            <div th:each="comment : ${Pad5}">
+                                                <div class="border my-2 bg-light">
+                                                    <div th:text="${comment.getUser().getFirstname()}" class="fw-bold mx-2">Firstname Lastname</div>
+                                                    <div th:text="${comment.getMessage()}" class="mx-2">Тело комментария</div>
+                                                </div>
+                                            </div>
+                                            <div sec:authorize="!isAuthenticated()">Необходимо зарегистрироваться, чтобы оставлять комментарии.</div>
+                                            <div sec:authorize="isAuthenticated()">
+                                                <form method="POST" th:action="@{/mobile-devices}" th:object="${newComment}">
+                                                    <div>
+                                                        <input type="hidden" value="Pad 5" name="productName">
+                                                        <textarea th:field="*{message}" rows="7" maxlength="700" minlength="5" placeholder="Напишите текст комментария здесь"
+                                                                  class="px-2" style="width: 100%"></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-outline-info float-end">Отправить</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Xiaomi Mi Pad 4 plus -->
+                        <div class="accordion-item mt-2">
+                            <h2 class="accordion-header" id="XiaomiMiPad4">
+                                <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#XiaomiMiPad4-Body" aria-expanded="false" aria-controls="collapseTwo">
+                                    <img src="images/mobile-devices/pads/Mi-Pad4-plus/Top-xiaomi-mi-pad4-plus.jpg" class="w-100">
+                                </button>
+                            </h2>
+                            <div id="XiaomiMiPad4-Body" class="accordion-collapse collapse" aria-labelledby="headingMiPad4" data-bs-parent="#accordionExample">
+                                <div class="accordion-body p-0">
+                                    <div class="row">
+                                        <img src="images/mobile-devices/pads/Mi-Pad4-plus/Advantages-Mi-Pad4-plus.jpg" class="w-100">
+                                    </div>
+                                    <div class="row mt-2">
+                                        <h3 class="text-center">Основные характеристики</h3>
+                                        <div class="col-4">
+                                            <img src="images/mobile-devices/pads/Mi-Pad4-plus/Specification-Mi-Pad4-plus.jpg" class="w-100">
+                                        </div>
+                                        <div class="col-8 align-self-center">
+                                            <ul>
+                                                <li><b>Процессор:</b> Qualcomm Snapdragon 660 (8 ядер)</li>
+                                                <li><b>Графика:</b> Adreno 512</li>
+                                                <li><b>Дисплей:</b> IPS 10,1", 1920x1200 пикселей</li>
+                                                <li><b>Основная камера:</b> 13 Мп</li>
+                                                <li><b>Фронтальная камера:</b> 5 Мп</li>
+                                                <li><b>Оперативная память:</b> 4 Гб</li>
+                                                <li><b>Внутренняя память:</b> 64/128 Гб</li>
+                                                <li><b>Аккумулятор:</b> 8620 мАч</li>
+
+                                                <li><b>Размеры:</b> 149.08х7.99х245.6 мм</li>
+                                                <li><b>Вес:</b> 485 г</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-1 mx-1">
+                                    <a class="btn btn-outline-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+                                    <a class="btn btn-outline-info" href="https://xiacom.ru/reviews/obzor-plansheta-xiaomi-mi-pad-4-plus/">Обзор</a>
+
+
+                                    <button class="btn btn-outline-info mb-3 w-100" data-bs-toggle="collapse" href="#commentsForPad4">
+                                        Обсуждение и комментарии
+                                    </button>
+                                    <div class="collapse" id="commentsForPad4">
+                                        <div class="card card-body mb-3">
+                                            <div>
+                                                <div th:each="comment : ${Pad4}">
+                                                    <div class="border my-2 bg-light">
+                                                        <div th:text="${comment.getUser().getFirstname()}" class="fw-bold mx-2">Firstname Lastname</div>
+                                                        <div th:text="${comment.getMessage()}" class="mx-2">Тело комментария</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div sec:authorize="!isAuthenticated()">Необходимо зарегистрироваться, чтобы оставлять комментарии.</div>
+                                            <div sec:authorize="isAuthenticated()">
+                                                <form method="POST" th:action="@{/mobile-devices}" th:object="${newComment}">
+                                                    <div>
+                                                        <input type="hidden" value="Pad 4" name="productName">
+                                                        <textarea th:field="*{message}" rows="7" maxlength="700" minlength="5" placeholder="Напишите текст комментария здесь"
+                                                                  class="px-2" style="width: 100%"></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-outline-info float-end">Отправить</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notebooks -->
+                <div class="tab-pane" id="notebooks">
+                    <div class="accordion accordion-flush m-0"  id="notebooksAccordion">
+                        <!--Xiaomi Mi Notebook Pro -->
+                        <div class="accordion-item mt-2">
+                            <h2 class="accordion-header" id="Mi-Notebook-Pro">
+                                <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#Mi-Notebook-Pro-Body" aria-expanded="false" aria-controls="collapseOne">
+                                    <img src="images/mobile-devices/notebooks/Mi-Notebook-Pro/Top-Mi-Notebook-Pro.jpg" class="w-100">
+                                </button>
+                            </h2>
+                            <div id="Mi-Notebook-Pro-Body" class="accordion-collapse collapse" aria-labelledby="headingMiNotebookPro" data-bs-parent="#accordionExample">
+                                <div class="accordion-body p-0">
+                                    <div class="row">
+                                        <img src="images/mobile-devices/notebooks/Mi-Notebook-Pro/Advantages-Mi-Notebook-Pro.jpg" class="w-100">
+                                    </div>
+                                    <div class="row mt-2">
+                                        <h3 class="text-center">Основные характеристики</h3>
+                                        <div class="col-4">
+                                            <img src="images/mobile-devices/notebooks/Mi-Notebook-Pro/Specification-Mi-Notebook-Pro.jpg" class="w-100">
+                                        </div>
+                                        <div class="col-8 align-self-center">
+                                            <ul>
+                                                <li><b>Процессор:</b> i5-11300H / i7-11370H / R5 5600H / R7 5800H</li>
+                                                <li><b>Видеокарта:</b> NVIDIA GeForce MX450 / Intel Iris Xe / AMD Radeon Graphics</li>
+                                                <li><b>Оперативная память:</b> 16 Гб 3200 МГц</li>
+                                                <li><b>Внутренняя память:</b> 512 Гб</li>
+                                                <li><b>Экран:</b> OLED 14" 2,5К 170° / OLED 15,6" 3,5К 170°</li>
+                                                <li><b>Операционная система:</b> Windows 10</li>
+                                                <li><b>Аккумулятор:</b> 56 Вт/ч / 66 Вт/ч</li>
+
+                                                <li><b>Вес:</b> 1500 г / 1800 г</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-1 mx-1">
+                                    <a class="btn btn-outline-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+                                    <a class="btn btn-outline-info" href="https://xiacom.ru/reviews/obzor-lineyki-noutbukov-xiaomi-mi-notebook-pro-2021/">Обзор</a>
+
+
+                                    <button class="btn btn-outline-info mb-3 w-100" data-bs-toggle="collapse" href="#commentsForMiNotebookPro">
+                                        Обсуждение и комментарии
+                                    </button>
+                                    <div class="collapse" id="commentsForMiNotebookPro">
+                                        <div class="card card-body mb-3">
+                                            <div th:each="comment : ${MiNotebookPro}">
+                                                <div class="border my-2 bg-light">
+                                                    <div th:text="${comment.getUser().getFirstname()}" class="fw-bold mx-2">Firstname Lastname</div>
+                                                    <div th:text="${comment.getMessage()}" class="mx-2">Тело комментария</div>
+                                                </div>
+                                            </div>
+                                            <div sec:authorize="!isAuthenticated()">Необходимо зарегистрироваться, чтобы оставлять комментарии.</div>
+                                            <div sec:authorize="isAuthenticated()">
+                                                <form method="POST" th:action="@{/mobile-devices}" th:object="${newComment}">
+                                                    <div>
+                                                        <input type="hidden" value="Mi Notebook Pro" name="productName">
+                                                        <textarea th:field="*{message}" rows="7" maxlength="700" minlength="5" placeholder="Напишите текст комментария здесь"
+                                                                  class="px-2" style="width: 100%"></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-outline-info float-end">Отправить</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Redmi G Gaming Laptop -->
+                        <div class="accordion-item mt-2">
+                            <h2 class="accordion-header" id="Redmi-G-Gaming-Laptop">
+                                <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#Redmi-G-Gaming-Laptop-Body" aria-expanded="false" aria-controls="collapseTwo">
+                                    <img src="images/mobile-devices/notebooks/Redmi-G-Gaming-Laptop/Top-Redmi-G-Gaming-Laptop.jpg" class="w-100">
+                                </button>
+                            </h2>
+                            <div id="Redmi-G-Gaming-Laptop-Body" class="accordion-collapse collapse" aria-labelledby="headingRedmiGGamingLaptop" data-bs-parent="#accordionExample">
+                                <div class="accordion-body p-0">
+                                    <div class="row">
+                                        <img src="images/mobile-devices/notebooks/Redmi-G-Gaming-Laptop/Advantages-Redmi-G-Gaming-Laptop.jpg" class="w-100">
+                                    </div>
+                                    <div class="row mt-2">
+                                        <h3 class="text-center">Основные характеристики</h3>
+                                        <div class="col-4">
+                                            <img src="images/mobile-devices/notebooks/Redmi-G-Gaming-Laptop/Specification-Redmi-G-Gaming-Laptop.jpg" class="w-100">
+                                        </div>
+                                        <div class="col-8 align-self-center">
+                                            <ul>
+                                                <li><b>Процессор:</b> i7-10750H / i5-10300H / i5-10200H</li>
+                                                <li><b>Видеокарта:</b> GeForce GTX 1650 Ti / GeForce GTX 1650</li>
+                                                <li><b>Оперативная память:</b> 16 Гб</li>
+                                                <li><b>Внутренняя память:</b> 512 Гб</li>
+                                                <li><b>Экран:</b> 16,1″, 1920х1080 пикселей, 178°</li>
+                                                <li><b>Операционная система:</b> Windows 10</li>
+                                                <li><b>Аккумулятор:</b> 55 Вт/ч</li>
+
+                                                <li><b>Размеры:</b> 373.44х264.47х23.1 мм</li>
+                                                <li><b>Вес:</b> 2500 г</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-1 mx-1">
+                                    <a class="btn btn-outline-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+                                    <a class="btn btn-outline-info" href="https://xiacom.ru/reviews/obzor-igrovogo-noutbuka-xiaomi-redmi-g-gaming-laptop/">Обзор</a>
+
+
+                                    <button class="btn btn-outline-info mb-3 w-100" data-bs-toggle="collapse" href="#commentsForRedmiGGamingLaptop">
+                                        Обсуждение и комментарии
+                                    </button>
+                                    <div class="collapse" id="commentsForRedmiGGamingLaptop">
+                                        <div class="card card-body mb-3">
+                                            <div th:each="comment : ${RedmiGGamingLaptop}">
+                                                <div class="border my-2 bg-light">
+                                                    <div th:text="${comment.getUser().getFirstname()}" class="fw-bold mx-2">Firstname Lastname</div>
+                                                    <div th:text="${comment.getMessage()}" class="mx-2">Тело комментария</div>
+                                                </div>
+                                            </div>
+                                            <div sec:authorize="!isAuthenticated()">Необходимо зарегистрироваться, чтобы оставлять комментарии.</div>
+                                            <div sec:authorize="isAuthenticated()">
+                                                <form method="POST" th:action="@{/mobile-devices}" th:object="${newComment}">
+                                                    <div>
+                                                        <input type="hidden" value="Redmi G Gaming Laptop" name="productName">
+                                                        <textarea th:field="*{message}" rows="7" maxlength="700" minlength="5" placeholder="Напишите текст комментария здесь"
+                                                                  class="px-2" style="width: 100%"></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-outline-info float-end">Отправить</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RedmiBook 13 -->
+                        <div class="accordion-item mt-2">
+                            <h2 class="accordion-header" id="RedmiBook-13">
+                                <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#RedmiBook-13-Body" aria-expanded="false" aria-controls="collapseOne">
+                                    <img src="images/mobile-devices/notebooks/RedmiBook-13/Top-RedmiBook13.jpg" class="w-100">
+                                </button>
+                            </h2>
+                            <div id="RedmiBook-13-Body" class="accordion-collapse collapse" aria-labelledby="headingRedmiBook13" data-bs-parent="#accordionExample">
+                                <div class="accordion-body p-0">
+                                    <div class="row">
+                                        <img src="images/mobile-devices/notebooks/RedmiBook-13/Advantages-RedmiBook13.jpg" class="w-100">
+                                    </div>
+                                    <div class="row mt-2">
+                                        <h3 class="text-center">Основные характеристики</h3>
+                                        <div class="col-4">
+                                            <img src="images/mobile-devices/notebooks/RedmiBook-13/Specification-RedmiBook13.jpg" class="w-100">
+                                        </div>
+                                        <div class="col-8 align-self-center">
+                                            <ul>
+                                                <li><b>Процессор:</b> i5-10210U / i7-10510U</li>
+                                                <li><b>Видеокарта:</b> NVIDIA GeForce MX250</li>
+                                                <li><b>Оперативная память:</b> 8 Гб 2666 МГц</li>
+                                                <li><b>Внутренняя память:</b> 512 Гб</li>
+                                                <li><b>Экран:</b> 13,3", 1920x1080 пикселей, 178°</li>
+                                                <li><b>Операционная система:</b> Windows 10 Home Edition</li>
+                                                <li><b>Функция быстрой зарядки</b></li>
+
+                                                <li><b>Размеры:</b> 307,3х195x17,8мм</li>
+                                                <li><b>Вес:</b> 1230 г</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-1 mx-1">
+                                    <a class="btn btn-outline-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+                                    <a class="btn btn-outline-info" href="https://xiacom.ru/reviews/obzor-noutbuka-xiaomi-redmibook-13-ultrakompaktnost-po-otlichnoy-tsene/">Обзор</a>
+
+
+                                    <button class="btn btn-outline-info mb-3 w-100" data-bs-toggle="collapse" href="#commentsForRedmiBook13">
+                                        Обсуждение и комментарии
+                                    </button>
+                                    <div class="collapse" id="commentsForRedmiBook13">
+                                        <div class="card card-body mb-3">
+                                            <div th:each="comment : ${RedmiBook13}">
+                                                <div class="border my-2 bg-light">
+                                                    <div th:text="${comment.getUser().getFirstname()}" class="fw-bold mx-2">Firstname Lastname</div>
+                                                    <div th:text="${comment.getMessage()}" class="mx-2">Тело комментария</div>
+                                                </div>
+                                            </div>
+                                            <div sec:authorize="!isAuthenticated()">Необходимо зарегистрироваться, чтобы оставлять комментарии.</div>
+                                            <div sec:authorize="isAuthenticated()">
+                                                <form method="POST" th:action="@{/mobile-devices}" th:object="${newComment}">
+                                                    <div>
+                                                        <input type="hidden" value="Redmi Book 13" name="productName">
+                                                        <textarea th:field="*{message}" rows="7" maxlength="700" minlength="5" placeholder="Напишите текст комментария здесь"
+                                                                  class="px-2" style="width: 100%"></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-outline-info float-end">Отправить</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<footer class="font-small blockquote-footer bg-light my-0 border-top">
+    <div class="container-fluid text-center pb-3">
+        © 2021: Данный сайт разработан исключительно в рамках курсового проекта и не предоставляет достоверной информации о продуктах Xiaomi.
+    </div>
+</footer>
+
+<script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

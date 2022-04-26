@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Аудио устройства Xiaomi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <style>
+        .btn {
+            margin-top: 1px;
+            margin-bottom: 1px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation menu -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a th:href="@{/}" class="navbar-brand p-0">
+            <img src="images/logo/logo.png" width="30px" height="30px">
+            Xiaomi
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav me-auto nb-2">
+                <li class="nav-item">
+                    <a th:href="@{/mobile-devices}" class="nav-link">
+                        <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Мобильные устройства</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a th:href="@{/smarthouse}" class="nav-link">
+                        <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Умные устройства</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <span style="color:#fff">Аудио</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a th:href="@{/mi-tv}" class="nav-link">
+                        <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Mi TV</span>
+                    </a>
+                </li>
+            </ul>
+            <div sec:authorize="!isAuthenticated()" class="d-flex">
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#authorizationForm">Войти</button>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                <span sec:authentication="name" class="text-white fw-bolder me-5 float-end"></span>
+            </div>
+            <form sec:authorize="isAuthenticated()" method="POST" th:action="@{/logout}" class="d-flex" id="logoutButton">
+                <button type="submit" class="btn btn-outline-danger">Выйти</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<!-- End of navigation menu -->
+
+<!-- Authorization form -->
+<div class="modal fade" id="authorizationForm" tabindex="-1" aria-hidden="true" aria-labelledby="authFormLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="authFormLabel">Авторизация</h5>
+                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pb-2">
+                <form method="POST" th:action="@{/login}" id="loginForm">
+                    <div class="row mb-3">
+                        <label for="inputLogin" class="col-sm-2 col-form-label">Логин:</label>
+                        <div class="col-sm-9 ms-4">
+                            <input type="text" class="form-control" id="inputLogin" name="username">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Пароль:</label>
+                        <div class="col-sm-9 ms-4">
+                            <input type="password" class="form-control" id="inputPassword" name="password">
+                        </div>
+                    </div>
+                    <div class="row border-top mb-0 p-0">
+                        <div class="mt-2">
+                            <a th:href="@{/registration}" class="ms-1" style="font-size: small">Зарегистрировать аккаунт</a>
+                            <button type="submit" class="btn btn-outline-success float-end">Войти</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main -->
+<main>
+    <div class="container">
+        <div class="row border-bottom" style="margin-top: 56px">
+            <img src="images/audio/Redmi-Buds-3.jpg">
+            <div class="col-lg-4">
+                <h4 class="text-center">Lite</h4>
+                <ul>
+                    <li><b>Дизайн:</b> Беспроводные TWS вкладыши</li>
+                    <li><b>Излучатели:</b> 6 мм динамические</li>
+                    <li><b>Bluetooth:</b> 5.2</li>
+                    <li><b>Диапазон связи:</b> 10 м (без препятствий)</li>
+                    <li><b>Чип:</b> Qualcomm QCC3040</li>
+                    <li><b>Водостойкость:</b> IP54</li>
+                    <li><b>Микрофоны:</b> 2 шт., высокочувствительные</li>
+                    <li><b>Автономность и зарядка:</b> 5 часов наушник, 18 часов с зарядным чехлом</li>
+                    <li><b>Аккумулятор:</b> 36 мАч (наушники), 315 мАч (зарядный чехол)</li>
+                    <li><b>Вес зарядного кейса:</b> 36 г</li>
+                </ul>
+                <div class="row mt-1">
+                    <div class="col-6 mt-2">
+                        <a href="https://www.mi.com/ru/redmi-buds-3-lite/">
+                            Узнать больше
+                        </a>
+                    </div>
+                    <div class="col-6 text-end mb-3">
+                        <a class="btn btn-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 border-start">
+                <h4 class="text-center">Basic</h4>
+                <ul>
+                    <li><b>Дизайн:</b> Беспроводные TWS вкладыши</li>
+                    <li><b>Излучатели:</b> 12-мм динамические</li>
+                    <li><b>Bluetooth:</b> 5.2</li>
+                    <li><b>Диапазон связи:</b> 10 м (без препятствий)</li>
+                    <li><b>Чип:</b> Qualcomm QCC3040</li>
+                    <li><b>Водостойкость:</b> IP54</li>
+                    <li><b>Микрофоны:</b> 2 шт., высокочувствительные</li>
+                    <li><b>Автономность и зарядка:</b> 5 часов наушник, 20 часов с зарядным чехлом</li>
+                    <li><b>Аккумулятор:</b> 35 мАч (наушники), 310 мАч (зарядный чехол)</li>
+                    <li><b>Вес зарядного кейса:</b>  51 г</li>
+                </ul>
+                <div class="row mt-1">
+                    <div class="col-6 mt-2">
+                        <a href="https://www.mi.com/ru/redmi-buds-3/">
+                            Узнать больше
+                        </a>
+                    </div>
+                    <div class="col-6 text-end mb-3">
+                        <a class="btn btn-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 border-start">
+                <h4 class="text-center">Pro</h4>
+                <ul>
+                    <li><b>Дизайн:</b> Беспроводные TWS «затычки»</li>
+                    <li><b>Излучатели:</b> 9 мм с композитной диафрагмой</li>
+                    <li><b>Bluetooth:</b> 5.2</li>
+                    <li><b>Диапазон связи:</b> 10 м (без препятствий)</li>
+                    <li><b>Чип:</b> Qualcomm QCC3040</li>
+                    <li><b>Водостойкость:</b> IPX4</li>
+                    <li><b>Микрофоны:</b> 3 шт., высокочувствительные</li>
+                    <li><b>Автономность и зарядка:</b> 6 часов наушник, 28 часов с зарядным чехлом</li>
+                    <li><b>Аккумулятор:</b> 35 мАч (наушники), 470 мАч (зарядный чехол)</li>
+                    <li><b>Вес зарядного кейса:</b> 55 г</li>
+                </ul>
+                <div class="row mt-1">
+                    <div class="col-6 mt-2">
+                        <a href="https://www.mi.com/ru/redmi-buds-3-pro/">
+                            Узнать больше
+                        </a>
+                    </div>
+                    <div class="col-6 text-end mb-3">
+                        <a class="btn btn-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div>
+                <button class="btn btn-outline-info w-100 py-2 mb-3" data-bs-toggle="collapse" href="#commentsForRedmiBuds3">
+                    Обсуждение и комментарии
+                </button>
+            </div>
+            <div class="collapse" id="commentsForRedmiBuds3">
+                <div class="card card-body mb-3">
+                    <div th:each="comment : ${RedmiBuds3}">
+                        <div class="border my-2 bg-light">
+                            <div th:text="${comment.getUser().getFirstname()}" class="fw-bold mx-2">Firstname Lastname</div>
+                            <div th:text="${comment.getMessage()}" class="mx-2">Тело комментария</div>
+                        </div>
+                    </div>
+                    <div sec:authorize="!isAuthenticated()">Необходимо зарегистрироваться, чтобы оставлять комментарии.</div>
+                    <div sec:authorize="isAuthenticated()">
+                        <form method="POST" th:action="@{/audio}" th:object="${newComment}">
+                            <div>
+                                <input type="hidden" value="Redmi Buds 3" name="productName">
+                                <textarea th:field="*{message}" rows="7" maxlength="700" minlength="5" placeholder="Напишите текст комментария здесь"
+                                          class="px-2" style="width: 100%"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-outline-info float-end">Отправить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3 border-bottom">
+            <img src="images/audio/Mi-True-Wireless-Earphones-2.jpg">
+
+
+            <div class="col-lg-4">
+                <h4 class="text-center">Basic</h4>
+                <ul>
+                    <li><b>Дизайн:</b> Беспроводные вкладыши</li>
+                    <li><b>Излучатели:</b> 14.2 мм</li>
+                    <li><b>Bluetooth:</b> 5.0</li>
+                    <li><b>Диапазон связи:</b> 10 м (без препятствий)</li>
+                    <li><b>Водостойкость:</b> Нет</li>
+                    <li><b>Автономность и зарядка:</b> 4 часа наушник, 12 часов с зарядным чехлом</li>
+                    <li><b>Аккумулятор:</b> 43 мАч (наушники), 300 мАч (зарядный чехол)</li>
+                    <li><b>Вес зарядного кейса:</b>  48 г</li>
+                </ul>
+                <div class="row mt-1">
+                    <div class="col-6 mt-2">
+                        <a href="https://www.mi.com/ru/mi-true-wireless-earbuds-basic-2/">
+                            Узнать больше
+                        </a>
+                    </div>
+                    <div class="col-6 text-end mb-3">
+                        <a class="btn btn-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 border-start">
+                <h4 class="text-center">Basic S</h4>
+                <ul>
+                    <li><b>Дизайн:</b> Беспроводные вкладыши</li>
+                    <li><b>Излучатели:</b> 7.2 мм динамические</li>
+                    <li><b>Bluetooth:</b> 5.0</li>
+                    <li><b>Диапазон связи:</b> 10 м (без препятствий)</li>
+                    <li><b>Водостойкость:</b> Нет</li>
+                    <li><b>Автономность и зарядка:</b> 4 часа наушник, 12 часов с зарядным чехлом</li>
+                    <li><b>Аккумулятор:</b> 43 мАч (наушники), 300 мАч (зарядный чехол)</li>
+                    <li><b>Вес зарядного кейса:</b>  35,4 г</li>
+                </ul>
+                <div class="row mt-1">
+                    <div class="col-6 mt-2">
+                        <a href="https://www.mi.com/ru/mi-true-wireless-earbuds-basic-s/">
+                            Узнать больше
+                        </a>
+                    </div>
+                    <div class="col-6 text-end mb-3">
+                        <a class="btn btn-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 border-start">
+                <h4 class="text-center">Pro</h4>
+                <ul>
+                    <li><b>Дизайн:</b> Беспроводные внутриканальные</li>
+                    <li><b>Излучатели:</b> 14.2 мм</li>
+                    <li><b>Bluetooth:</b> 5.0</li>
+                    <li><b>Диапазон связи:</b> 10 м (без препятствий)</li>
+                    <li><b>Водостойкость:</b> IPX4</li>
+                    <li><b>Автономность и зарядка:</b> 6 часов наушник, 30 часов с зарядным чехлом</li>
+                    <li><b>Аккумулятор:</b> 40 мАч (наушники), 500 мАч (зарядный чехол)</li>
+                    <li><b>Вес зарядного кейса:</b>  62 г</li>
+                </ul>
+                <div class="row mt-1">
+                    <div class="col-6 mt-2">
+                        <a href="https://www.mi.com/ru/mi-true-wireless-earphones-2-pro/">
+                            Узнать больше
+                        </a>
+                    </div>
+                    <div class="col-6 text-end mb-3">
+                        <a class="btn btn-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div>
+                <button class="btn btn-outline-info w-100 py-2 mb-3" data-bs-toggle="collapse" href="#commentsForTrueWirelessEarphones2">
+                    Обсуждение и комментарии
+                </button>
+            </div>
+            <div class="collapse" id="commentsForTrueWirelessEarphones2">
+                <div class="card card-body mb-3">
+                    <div th:each="comment : ${MiTrueWirelessEarphones2}">
+                        <div class="border my-2 bg-light">
+                            <div th:text="${comment.getUser().getFirstname()}" class="fw-bold mx-2">Firstname Lastname</div>
+                            <div th:text="${comment.getMessage()}" class="mx-2">Тело комментария</div>
+                        </div>
+                    </div>
+                    <div sec:authorize="!isAuthenticated()">Необходимо зарегистрироваться, чтобы оставлять комментарии.</div>
+                    <div sec:authorize="isAuthenticated()">
+                        <form method="POST" th:action="@{/audio}" th:object="${newComment}">
+                            <div>
+                                <input type="hidden" value="Mi True Wireless Earphones 2" name="productName">
+                                <textarea th:field="*{message}" rows="7" maxlength="700" minlength="5" placeholder="Напишите текст комментария здесь"
+                                          class="px-2" style="width: 100%"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-outline-info float-end">Отправить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-4">
+                <img src="images/audio/Mi-Compact-Bluetooth-Speaker-2.jpg" class="w-100">
+            </div>
+            <div class="col-8 mt-3">
+                <h2 class="ms-2">Mi Compact Bluetooth Speaker 2</h2>
+                <div class="m-2">Портативная колонка Xiaomi. Первоклассное качество. Чистый звук. Компактность и эргономичность</div>
+                <div class="m-2">Поставляется в двух цветовых схемах - черная и белая. Имеет минималистичный дизайн.
+                Изготовлена из пластика (нижняя часть) и анодированного алюминия (верх).</div>
+                <div class="m-2">Основные характеристики: </div>
+                <ul>
+                    <li><b>Мощность:</b> 5 Вт</li>
+                    <li><b>Радиус действия:</b> 10 м (без препятствий)</li>
+                    <li><b>Bluetooth:</b> 4.1</li>
+                    <li><b>Автономность и зарядка:</b> 7 часов</li>
+                    <li><b>Аккумулятор:</b> 1200 мАч</li>
+                    <li><b>Вес зарядного кейса:</b> 305 г</li>
+                </ul>
+                <a class="btn btn-warning ms-2" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+            </div>
+
+
+            <div>
+                <button class="btn btn-outline-info w-100 py-2 mb-3" data-bs-toggle="collapse" href="#commentsForCompactBluetoothSpeaker2">
+                    Обсуждение и комментарии
+                </button>
+            </div>
+            <div class="collapse" id="commentsForCompactBluetoothSpeaker2">
+                <div class="card card-body mb-3">
+                    <div th:each="comment : ${MiCompactBluetoothSpeaker2}">
+                        <div class="border my-2 bg-light">
+                            <div th:text="${comment.getUser().getFirstname()}" class="fw-bold mx-2">Firstname Lastname</div>
+                            <div th:text="${comment.getMessage()}" class="mx-2">Тело комментария</div>
+                        </div>
+                    </div>
+                    <div sec:authorize="!isAuthenticated()">Необходимо зарегистрироваться, чтобы оставлять комментарии.</div>
+                    <div sec:authorize="isAuthenticated()">
+                        <form method="POST" th:action="@{/audio}" th:object="${newComment}">
+                            <div>
+                                <input type="hidden" value="Mi Compact Bluetooth Speaker 2" name="productName">
+                                <textarea th:field="*{message}" rows="7" maxlength="700" minlength="5" placeholder="Напишите текст комментария здесь"
+                                          class="px-2" style="width: 100%"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-outline-info float-end">Отправить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="font-small blockquote-footer bg-light my-0 border-top">
+    <div class="container-fluid text-center pb-3">
+        © 2021: Данный сайт разработан исключительно в рамках курсового проекта и не предоставляет достоверной информации о продуктах Xiaomi.
+    </div>
+</footer>
+
+<script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Xiaomi Mi TV</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <style>
+        .btn {
+            margin-top: 1px;
+            margin-bottom: 1px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation menu -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a th:href="@{/}" class="navbar-brand p-0">
+            <img src="images/logo/logo.png" width="30px" height="30px">
+            Xiaomi
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav me-auto nb-2">
+                <li class="nav-item">
+                    <a th:href="@{/mobile-devices}" class="nav-link">
+                        <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Мобильные устройства</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a th:href="@{/smarthouse}" class="nav-link">
+                        <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Умные устройства</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a th:href="@{/audio}" class="nav-link">
+                        <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Аудио</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <span style="color:#fff">Mi TV</span>
+                    </a>
+                </li>
+            </ul>
+            <div sec:authorize="!isAuthenticated()" class="d-flex">
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#authorizationForm">Войти</button>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                <span sec:authentication="name" class="text-white fw-bolder me-5 float-end"></span>
+            </div>
+            <form sec:authorize="isAuthenticated()" method="POST" th:action="@{/logout}" class="d-flex" id="logoutButton">
+                <button type="submit" class="btn btn-outline-danger">Выйти</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<!-- End of navigation menu -->
+
+<!-- Authorization form -->
+<div class="modal fade" id="authorizationForm" tabindex="-1" aria-hidden="true" aria-labelledby="authFormLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="authFormLabel">Авторизация</h5>
+                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pb-2">
+                <form method="POST" th:action="@{/login}" id="loginForm">
+                    <div class="row mb-3">
+                        <label for="inputLogin" class="col-sm-2 col-form-label">Логин:</label>
+                        <div class="col-sm-9 ms-4">
+                            <input type="text" class="form-control" id="inputLogin" name="username">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Пароль:</label>
+                        <div class="col-sm-9 ms-4">
+                            <input type="password" class="form-control" id="inputPassword" name="password">
+                        </div>
+                    </div>
+                    <div class="row border-top mb-0 p-0">
+                        <div class="mt-2">
+                            <a th:href="@{/registration}" class="ms-1" style="font-size: small">Зарегистрировать аккаунт</a>
+                            <button type="submit" class="btn btn-outline-success float-end">Войти</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main -->
+<main>
+    <div class="container">
+
+        <div>
+            <div class="row mb-2" style="margin-top: 56px">
+                <img src="images/mi-tv/Q1/Mi-TV-Q1-QLED-4K.jpg" class="w-100">
+            </div>
+            <div class="row">
+                <div class="col-4 card">
+                    <p class="text-center"><b>Безграничный экран 4K QLED</b></p>
+                    <img src="images/mi-tv/Q1/Mi-TV-Q1-QLED-4K-display.jpg" class="w-100">
+                    <p class="mx-3">Для передачи более насыщенной и реалистичной картинки</p>
+                </div>
+                <div class="col-4 card">
+                    <p class="text-center"><b>Dolby Vision® и HDR10+</b></p>
+                    <img src="images/mi-tv/Q1/Mi-TV-Q1-QLED-4K-hdr.jpg" class="w-100">
+                    <p class="mx-3">Для детализированного изображения в ярких и темных сценах</p>
+                </div>
+                <div class="col-4 card">
+                    <p class="text-center"><b>Технология квантовых точек</b></p>
+                    <img src="images/mi-tv/Q1/Mi-TV-Q1-QLED-4K-color-spectrum.jpg" class="w-100">
+                    <p class="mx-3">Обеспечивает широкий цветовой диапазон</p>
+                </div>
+            </div>
+            <div class="row mt-1 px-0">
+                <a class="btn btn-outline-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+                <a class="btn btn-outline-info" href="https://www.mi.com/ru/mi-tv-q1-75/">Обзор</a>
+
+                <button class="btn btn-outline-info w-100 mb-3" data-bs-toggle="collapse" href="#commentsForMiTvQ1">
+                    Обсуждение и комментарии
+                </button>
+                <div class="collapse" id="commentsForMiTvQ1">
+                    <div class="card card-body mb-3">
+                        <div th:each="comment : ${MiTVQ1}">
+                            <div class="border my-2 bg-light">
+                                <div th:text="${comment.getUser().getFirstname()}" class="fw-bold mx-2">Firstname Lastname</div>
+                                <div th:text="${comment.getMessage()}" class="mx-2">Тело комментария</div>
+                            </div>
+                        </div>
+                        <div sec:authorize="!isAuthenticated()">Необходимо зарегистрироваться, чтобы оставлять комментарии.</div>
+                        <div sec:authorize="isAuthenticated()">
+                            <form method="POST" th:action="@{/mi-tv}" th:object="${newComment}">
+                                <div>
+                                    <input type="hidden" value="Mi TV Q1" name="productName">
+                                    <textarea th:field="*{message}" rows="7" maxlength="700" minlength="5" placeholder="Напишите текст комментария здесь"
+                                              class="px-2" style="width: 100%"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-outline-info float-end">Отправить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="row mb-2 mt-4">
+                <img src="images/mi-tv/P1/Mi-TV-P1-Series.jpg" class="w-100">
+            </div>
+            <div class="row">
+                <div class="col-4 card">
+                    <p class="text-center"><b>Разрешение 4K UHD</b></p>
+                    <img src="images/mi-tv/P1/Mi-TV-P1-4k-uhd.jpg" class="w-100">
+                    <p class="mx-3">Обеспечивает реалистичные изображения с большей детализацией и глубиной</p>
+                </div>
+                <div class="col-4 card">
+                    <p class="text-center"><b>Dolby Vision® и HDR10+</b></p>
+                    <img src="images/mi-tv/P1/Mi-TV-P1-hdr.jpg" class="w-100">
+                    <p class="mx-3">Для детализированного изображения в ярких и темных сценах</p>
+                </div>
+                <div class="col-4 card">
+                    <p class="text-center"><b>Широкая цветовая гамма</b></p>
+                    <img src="images/mi-tv/P1/Mi-TV-P1-color-spectrum.jpg" class="w-100">
+                    <p class="mx-3">Обеспечивает покрытие DCI-P3 до 94%, 1,07 миллиарда цветов</p>
+                </div>
+            </div>
+            <div class="row mt-1 px-0">
+                <a class="btn btn-outline-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+                <a class="btn btn-outline-info" href="https://www.mi.com/ru/mi-tv-p1-55/">Обзор</a>
+
+
+                <button class="btn btn-outline-info mb-3 w-100" data-bs-toggle="collapse" href="#commentsForMiTvP1">
+                    Обсуждение и комментарии
+                </button>
+                <div class="collapse" id="commentsForMiTvP1">
+                    <div class="card card-body mb-3">
+                        <div th:each="comment : ${MiTVP1}">
+                            <div class="border my-2 bg-light">
+                                <div th:text="${comment.getUser().getFirstname()}" class="fw-bold mx-2">Firstname Lastname</div>
+                                <div th:text="${comment.getMessage()}" class="mx-2">Тело комментария</div>
+                            </div>
+                        </div>
+                        <div sec:authorize="!isAuthenticated()">Необходимо зарегистрироваться, чтобы оставлять комментарии.</div>
+                        <div sec:authorize="isAuthenticated()">
+                            <form method="POST" th:action="@{/mi-tv}" th:object="${newComment}">
+                                <div>
+                                    <input type="hidden" value="Mi TV P1" name="productName">
+                                    <textarea th:field="*{message}" rows="7" maxlength="700" minlength="5" placeholder="Напишите текст комментария здесь"
+                                              class="px-2" style="width: 100%"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-outline-info float-end">Отправить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="font-small blockquote-footer bg-light my-0 border-top">
+    <div class="container-fluid text-center pb-3">
+        © 2021: Данный сайт разработан исключительно в рамках курсового проекта и не предоставляет достоверной информации о продуктах Xiaomi.
+    </div>
+</footer>
+
+<script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

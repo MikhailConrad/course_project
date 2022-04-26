@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <style th:inline = "text">
+        .btn {
+            margin-top: 1px;
+            margin-bottom: 1px;
+        }
+        .regForm {
+            background-image: url([[@{../images/registration-page/registration-background.jpg}]]);
+            background-repeat: no-repeat;
+            background-color: #ff6702;
+            background-position: center;
+        }
+        .regValidationError {
+            color: #830000;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation menu -->
+    <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
+        <div class="container">
+            <a th:href="@{/}" class="navbar-brand p-0">
+                <img src="images/logo/logo.png" width="30px" height="30px">
+                Xiaomi
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                    aria-controls="navbarContent" aria-expanded="false">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto nb-2">
+                    <li class="nav-item">
+                        <a th:href="@{/mobile-devices}" class="nav-link">
+                            <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Мобильные устройства</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a th:href="@{/smarthouse}" class="nav-link">
+                            <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Умные устройства</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a th:href="@{/audio}" class="nav-link">
+                            <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Аудио</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a th:href="@{/mi-tv}" class="nav-link">
+                            <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Mi TV</span>
+                        </a>
+                    </li>
+                </ul>
+                <div sec:authorize="!isAuthenticated()" class="d-flex">
+                    <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#authorizationForm">Войти</button>
+                </div>
+                <form sec:authorize="isAuthenticated()" method="POST" th:action="@{/logout}" class="d-flex" id="logoutButton">
+                    <button type="submit" class="btn btn-outline-danger">Выйти</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- End of navigation menu -->
+
+    <!-- Authorization form -->
+    <div class="modal fade" id="authorizationForm" tabindex="-1" aria-hidden="true" aria-labelledby="authFormLabel">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="authFormLabel">Авторизация</h5>
+                    <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pb-2">
+                    <form method="POST" th:action="@{/login}" id="loginForm">
+                        <div class="row mb-3">
+                            <label for="inputLogin" class="col-sm-2 col-form-label">Логин:</label>
+                            <div class="col-sm-9 ms-4">
+                                <input type="text" class="form-control" id="inputLogin" name="username">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="inputPassword" class="col-sm-2 col-form-label">Пароль:</label>
+                            <div class="col-sm-9 ms-4">
+                                <input type="password" class="form-control" id="inputPassword" name="password">
+                            </div>
+                        </div>
+                        <div class="row border-top mb-0 p-0">
+                            <div class="mt-2">
+                                <a th:href="@{/registration}" class="ms-1" style="font-size: small">Зарегистрировать аккаунт</a>
+                                <button type="submit" class="btn btn-outline-success float-end">Войти</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <main>
+        <div class="container regForm text-center"
+             style="margin-top: 56px; width: 1440px; height: 1240px;">
+            <h2 class="text-white pt-5" style="margin-bottom: 420px">Введите данные для регистрации нового аккаунта</h2>
+            <form method="POST" th:action="@{/registration}" th:object="${newUser}" id="registrationForm">
+
+                <p><label for="username"><b>Логин: </b></label></br>
+                <input type="text" maxlength="20" id="username" name="username"/></br>
+                <span class="regValidationError"
+                      th:if="${#fields.hasErrors('username')}"
+                      th:errors="*{username}">Error</span>
+                <span class="regValidationError"
+                      th:text="${usernameError}">Error</span></p>
+
+                <p><label for="password"><b>Пароль: </b></label></br>
+                <input type="password" maxlength="25" id="password" name="password"/></br>
+                <span class="regValidationError"
+                      th:if="${#fields.hasErrors('password')}"
+                      th:errors="*{password}">Error</span></p>
+
+                <p><label for="passwordConfirm" class="mt-1"><b>Подтверждение пароля: </b></label></br>
+                <input type="password" maxlength="25" id="passwordConfirm" name="passwordConfirm"/></br>
+                <span class="regValidationError"
+                      th:text="${passwordError}">Error</span></p>
+
+
+                <p><label for="firstname"><b>Имя: </b></label></br>
+                <input type="text" maxlength="25" id="firstname" name="firstname"/></br>
+                <span class="regValidationError"
+                      th:if="${#fields.hasErrors('firstname')}"
+                      th:errors="*{firstname}">Error</span></p>
+
+                <p><label for="lastname"><b>Фамилия: </b></label></br>
+                <input type="text" maxlength="25" id="lastname" name="lastname"/></br>
+                <span class="regValidationError"
+                      th:if="${#fields.hasErrors('lastname')}"
+                      th:errors="*{lastname}">Error</span></p>
+
+                <p><label for="email"><b>E-mail: </b></label></br>
+                <input type="text" maxlength="25" id="email" name="email"/></br>
+                    <span class="regValidationError"
+                          th:if="${#fields.hasErrors('email')}"
+                          th:errors="*{email}">Error</span></p>
+
+                <button type="submit" class="btn btn-danger mt-3">Подтвердить регистрацию</button>
+
+            </form>
+        </div>
+    </main>
+
+    <footer class="font-small blockquote-footer bg-light my-0 border-top">
+        <div class="container-fluid text-center pb-3">
+            © 2021: Данный сайт разработан исключительно в рамках курсового проекта и не предоставляет достоверной информации о продуктах Xiaomi.
+        </div>
+    </footer>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

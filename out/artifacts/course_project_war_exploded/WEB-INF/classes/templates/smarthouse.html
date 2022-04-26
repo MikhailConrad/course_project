@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Умные устройства Xiaomi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <style>
+        .card-group {
+            display: flex;
+            flex-direction: row;
+            overflow-y: scroll;
+            overflow-y: hidden;
+            flex-wrap: nowrap;
+        }
+        .btn {
+            margin-top: 1px;
+            margin-bottom: 1px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation menu -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a th:href="@{/}" class="navbar-brand p-0">
+            <img src="images/logo/logo.png" width="30px" height="30px">
+            Xiaomi
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav me-auto nb-2">
+                <li class="nav-item">
+                    <a th:href="@{/mobile-devices}" class="nav-link">
+                        <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Мобильные устройства</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <span style="color:#fff">Умные устройства</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a th:href="@{/audio}" class="nav-link">
+                        <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Аудио</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a th:href="@{/mi-tv}" class="nav-link">
+                        <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Mi TV</span>
+                    </a>
+                </li>
+            </ul>
+            <div sec:authorize="!isAuthenticated()" class="d-flex">
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#authorizationForm">Войти</button>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                <span sec:authentication="name" class="text-white fw-bolder me-5 float-end"></span>
+            </div>
+            <form sec:authorize="isAuthenticated()" method="POST" th:action="@{/logout}" class="d-flex" id="logoutButton">
+                <button type="submit" class="btn btn-outline-danger">Выйти</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<!-- End of navigation menu -->
+
+<!-- Authorization form -->
+<div class="modal fade" id="authorizationForm" tabindex="-1" aria-hidden="true" aria-labelledby="authFormLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="authFormLabel">Авторизация</h5>
+                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pb-2">
+                <form method="POST" th:action="@{/login}" id="loginForm">
+                    <div class="row mb-3">
+                        <label for="inputLogin" class="col-sm-2 col-form-label">Логин:</label>
+                        <div class="col-sm-9 ms-4">
+                            <input type="text" class="form-control" id="inputLogin" name="username">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Пароль:</label>
+                        <div class="col-sm-9 ms-4">
+                            <input type="password" class="form-control" id="inputPassword" name="password">
+                        </div>
+                    </div>
+                    <div class="row border-top mb-0 p-0">
+                        <div class="mt-2">
+                            <a th:href="@{/registration}" class="ms-1" style="font-size: small">Зарегистрировать аккаунт</a>
+                            <button type="submit" class="btn btn-outline-success float-end">Войти</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main -->
+<main>
+    <div class="container">
+        <div class="row" style="margin-top: 56px">
+            <img src="images/smarthouse/smarthouse.jpg" class="w-100">
+        </div>
+        <div class="mt-3">
+            <p>Умный дом Xiaomi (Mi Home) — это объединенные в единую сеть под управлением искусственного интеллекта умные устройства и система их взаимодействия через специальное приложение, доступное на Android и IOS.<br>
+            Для того, чтобы все устройства могли работать в единой системе, необходим блок управления Xiaomi Mi Smart Home Hub или Aqara Hub. Он объединяет все модули и осуществляет взаимодействие между всеми элементами системы. Работает от сети.</p>
+
+            <p>Преимущество системы заключается в том, что вы самостоятельно можете задавать условия работы или включения/отключения устройств.<br>
+            Можно запрограммировать датчик так, чтобы каждый раз при движении включалась камера. Можно задать команду выключать кондиционер и увлажнитель при открытии окон.
+            Можно включить кондиционер заранее до прихода домой, чтобы войти в прохладное помещение, можно включить чайник, не вставая с кровати, а робот-пылесос проведет комплексную уборку всей квартиры самостоятельно, даже без вашего присутствия.
+            Это очень удобно!</p>
+
+            <!--<p>В систему «умного дома» могут входить:
+            Различные датчики (температуры, влажности, сенсоры движения и открывания);
+            Умные розетки (с USB-разъемом и Wi-Fi модулем), которым можно задавать время работы и отключать удаленно;
+            Умные устройства (очистители воздуха, чайники, увлажнители, освещение, весы, пылесосы, видеокамеры и многое другое).</p> -->
+        </div>
+        <div>
+            <img src="images/smarthouse/smarthouse-connection.jpg" class="w-100">
+        </div>
+
+        <h3 class="mt-3 text-center">Решения, предлагаемые Xiaomi Mi Home:</h3>
+        <div>
+
+            <h5 class="mb-4">Безопасность и видеонаблюдение</h5>
+            <div class="card-group row pb-1">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/security/Mi-Smart-Camera-2K.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Mi Smart Camera 2K</b></div>
+                            <p class="card-text">
+                                Камера видеонаблюдения
+                            </p>
+                            <a href="https://www.mi.com/ru/mi-360-home-security-camera-2k/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/security/Mi-Human-Sensor-2.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Mi Human Sensor 2</b></div>
+                            <p class="card-text">
+                                Датчик движения
+                            </p>
+                            <a href="https://xiaomi-smarthome.ru/product/mi-human-sensor-2/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/security/Mi-Smart-Home-Door-Window-Sensor-2.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Mi Door/Window Sensor 2</b></div>
+                            <p class="card-text">
+                                Датчик открытия дверей и окон
+                            </p>
+                            <a href="https://xiaomi-smarthome.ru/product/xiaomi-mi-smart-home-door-window-sensor-2/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/security/Outdoor-Panoramic-Camera.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Xiaovv Outdoor Camera</b></div>
+                            <p class="card-text">
+                                Уличная камера наблюдения
+                            </p>
+                            <a href="https://xiacom.ru/reviews/obzor-ip-kamery-naruzhnogo-nablyudeniya-xiaomi-xiaovv-outdoor-camera-pro/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/security/Mi-Flood-Guard.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Mi Flood Detector</b></div>
+                            <p class="card-text">
+                                Датчик протечки
+                            </p>
+                            <a href="https://xiaomi-smarthome.ru/datchik-protechki-vody-xiaomi-mi-flood-detector/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/security/Mi-Smart-Camera-Pro.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Mi Smart Camera 2K Pro</b></div>
+                            <p class="card-text">
+                                Камера видеонаблюдения
+                            </p>
+                            <a href="https://www.mi.com/ru/mi-360-home-security-camera-2k-pro/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/security/Aqara-Vibration-Sensor.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Aqara Vibration Sensor</b></div>
+                            <p class="card-text">
+                                Датчик разбития стекла
+                            </p>
+                            <a href="https://xiaomi-smarthome.ru/aqara-vibration-sensor/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/security/Aqara-Temperature-Sensor.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Aqara Temperature Sensor</b></div>
+                            <p class="card-text">
+                                Датчик температуры и влажности
+                            </p>
+                            <a href="https://xiaomi-smarthome.ru/datchik-temperatury-vlazhnosti-i-davleniya-aqara/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/security/Mijia-Honeywell.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Mijia Honeywell Gas Leak Detector</b></div>
+                            <p class="card-text">
+                                Датчик утечки газа
+                            </p>
+                            <a href="https://xiaomi-smarthome.ru/datchik-gaza-mijia-honeywell/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-1">
+                <a class="btn btn-outline-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+
+
+                <button class="btn btn-outline-info mb-3 w-100" data-bs-toggle="collapse" href="#commentsForSmartHouseSecurity">
+                    Обсуждение и комментарии
+                </button>
+                <div class="collapse" id="commentsForSmartHouseSecurity">
+                    <div class="card card-body mb-3">
+                        <div th:each="comment : ${Security}">
+                            <div class="border my-2 bg-light">
+                                <div th:text="${comment.getUser().getFirstname()}" class="fw-bold mx-2">Firstname Lastname</div>
+                                <div th:text="${comment.getMessage()}" class="mx-2">Тело комментария</div>
+                            </div>
+                        </div>
+                        <div sec:authorize="!isAuthenticated()">Необходимо зарегистрироваться, чтобы оставлять комментарии.</div>
+                        <div sec:authorize="isAuthenticated()">
+                            <form method="POST" th:action="@{/smarthouse}" th:object="${newComment}">
+                                <div>
+                                    <input type="hidden" value="Security" name="productName">
+                                    <textarea th:field="*{message}" rows="7" maxlength="700" minlength="5" placeholder="Напишите текст комментария здесь"
+                                              class="px-2" style="width: 100%"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-outline-info float-end">Отправить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <h5 class="mt-5 mb-4">Умные приборы</h5>
+            <div class="card-group row pb-1">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/devices/Mi-Robot-Vacuum-Mop-2.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Mi Robot Vacuum-Mop 2 Lite</b></div>
+                            <p class="card-text">
+                                Умный робот пылесос
+                            </p>
+                            <a href="https://www.mi.com/ru/mi-robot-vacuum-mop-2-lite/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/devices/Mi-Smart-Scale-2.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Mi Smart Scale 2</b></div>
+                            <p class="card-text">
+                                Умныe весы
+                            </p>
+                            <a href="https://www.mi.com/ru/mi-smart-scale-2/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/devices/Mi-Air-Purifier-3C.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Mi Air Purifier 3C</b></div>
+                            <p class="card-text">
+                                Фильтр, очиститель воздуха
+                            </p>
+                            <a href="https://www.mi.com/ru/mi-air-purifier-3c/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/devices/Mi-Smart-Antibacterial-Humidifier.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Mi Smart Antibacterial Humidifier</b></div>
+                            <p class="card-text">
+                                Увлажнитель воздуха
+                            </p>
+                            <a href="">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/devices/Mi-Electric-Kettle.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Mi Electric Kettle</b></div>
+                            <p class="card-text">
+                                Умный чайник
+                            </p>
+                            <a href="https://www.mi.com/ru/electric-kettle/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/devices/Mi-Smart-Speaker.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Mi Smart Speaker</b></div>
+                            <p class="card-text">
+                                Умная колонка
+                            </p>
+                            <a href="https://www.mi.com/ru/mi-smart-speaker-ru/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/devices/Aqara-Smart-Curtain.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Aqara Smart Curtain</b></div>
+                            <p class="card-text">
+                                Умные шторы
+                            </p>
+                            <a href="https://xiaomi-smarthome.ru/avtomaticheskie-shtory-xiaomi-aqara-curtain/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/devices/Mi-Smart-Plug-Wi-Fi.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Xiaomi Mi Smart Plug Wi-Fi</b></div>
+                            <p class="card-text">
+                                Умная розетка
+                            </p>
+                            <a href="https://www.mi.com/ru/mi-robot-vacuum-mop-2-lite/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-1">
+                <a class="btn btn-outline-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+
+
+                <button class="btn btn-outline-info mb-3 w-100" data-bs-toggle="collapse" href="#commentsForSmartDevices">
+                    Обсуждение и комментарии
+                </button>
+                <div class="collapse" id="commentsForSmartDevices">
+                    <div class="card card-body mb-3">
+                        <div th:each="comment : ${Devices}">
+                            <div class="border my-2 bg-light">
+                                <div th:text="${comment.getUser().getFirstname()}" class="fw-bold mx-2">Firstname Lastname</div>
+                                <div th:text="${comment.getMessage()}" class="mx-2">Тело комментария</div>
+                            </div>
+                        </div>
+                        <div sec:authorize="!isAuthenticated()">Необходимо зарегистрироваться, чтобы оставлять комментарии.</div>
+                        <div sec:authorize="isAuthenticated()">
+                            <form method="POST" th:action="@{/smarthouse}" th:object="${newComment}">
+                                <div>
+                                    <input type="hidden" value="Devices" name="productName">
+                                    <textarea th:field="*{message}" rows="7" maxlength="700" minlength="5" placeholder="Напишите текст комментария здесь"
+                                              class="px-2" style="width: 100%"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-outline-info float-end">Отправить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <h5 class="mt-5 mb-4">Освещение</h5>
+            <div class="card-group row pb-1">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/light/Yeelight-Smart-Color-Light-Bulb-1S.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Yeelight Smart Color Light Bulb 1S</b></div>
+                            <p class="card-text">
+                                Цветная лампочка
+                            </p>
+                            <a href="https://xiaomi-smarthome.ru/aqara-led-light-bulb/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/light/Xiaomi-Philips-Zhirui.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Xiaomi Philips Zhirui</b></div>
+                            <p class="card-text">
+                                Точечный потолочный светильник
+                            </p>
+                            <a href="https://xiaomi-smarthome.ru/tochechnyj-svetilnik-xiaomi-philips-zhirui/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/light/Mijia-Bedside-Lamp.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Mijia Bedside Lamp</b></div>
+                            <p class="card-text">
+                                Умный ночник
+                            </p>
+                            <a href="https://www.mi.com/ru/mi-bedside-lamp-2/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/light/Aqara-Smart-Bulb.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Aqara Smart Bulb</b></div>
+                            <p class="card-text">
+                                Умная лампочка
+                            </p>
+                            <a href="https://www.mi.com/ru/mi-smart-led-bulb-warm-white/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/light/Mijia-Night-Light-2.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Mijia Night Light 2</b></div>
+                            <p class="card-text">
+                                Ночник с датчиком движения
+                            </p>
+                            <a href="https://www.mi.com/ru/mi-motion-activated-night-light-2/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-1">
+                <a class="btn btn-outline-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+
+
+                <button class="btn btn-outline-info mb-3 w-100" data-bs-toggle="collapse" href="#commentsForSmartHouseLights">
+                    Обсуждение и комментарии
+                </button>
+                <div class="collapse" id="commentsForSmartHouseLights">
+                    <div class="card card-body mb-3">
+                        <div th:each="comment : ${Light}">
+                            <div class="border my-2 bg-light">
+                                <div th:text="${comment.getUser().getFirstname()}" class="fw-bold mx-2">Firstname Lastname</div>
+                                <div th:text="${comment.getMessage()}" class="mx-2">Тело комментария</div>
+                            </div>
+                        </div>
+                        <div sec:authorize="!isAuthenticated()">Необходимо зарегистрироваться, чтобы оставлять комментарии.</div>
+                        <div sec:authorize="isAuthenticated()">
+                            <form method="POST" th:action="@{/smarthouse}" th:object="${newComment}">
+                                <div>
+                                    <input type="hidden" value="Light" name="productName">
+                                    <textarea th:field="*{message}" rows="7" maxlength="700" minlength="5" placeholder="Напишите текст комментария здесь"
+                                              class="px-2" style="width: 100%"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-outline-info float-end">Отправить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <h5 class="mt-5 mb-4">Контроллеры управления</h5>
+            <div class="card-group row pb-1">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/control-hubs/Mi-Control-Hub.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Mi Control Hub</b></div>
+                            <p class="card-text">
+                                Контроллер управления умным домом
+                            </p>
+                            <a href="https://xiaomi-smarthome.ru/aqara-hub/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/control-hubs/Yeelight-Voice-Assistant.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Yeelight Voice Assistant</b></div>
+                            <p class="card-text">
+                                Голосовой ассистент
+                            </p>
+                            <a href="https://xiacom.ru/news/novyy-golosovoy-pomoshchnik-yeelight-voice-assistant/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="images/smarthouse/control-hubs/Aqara-Hub-M1S.jpg">
+                        <div class="card-body">
+                            <div class="card-title"><b>Aqara Hub M1S</b></div>
+                            <p class="card-text">
+                                Контроллер управления умным домом
+                            </p>
+                            <a href="https://xiaomi-smarthome.ru/aqara-hub-m1s-zhwg15lm/">Узнать больше</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-1">
+                <a class="btn btn-outline-warning" th:href="@{/#XiaomiInRussia}">Где купить?</a>
+
+
+                <button class="btn btn-outline-info mb-3 w-100" data-bs-toggle="collapse" href="#commentsForSmartHouseControllers">
+                    Обсуждение и комментарии
+                </button>
+                <div class="collapse" id="commentsForSmartHouseControllers">
+                    <div class="card card-body mb-3">
+                        <div th:each="comment : ${ControlHubs}">
+                            <div class="border my-2 bg-light">
+                                <div th:text="${comment.getUser().getFirstname()}" class="fw-bold mx-2">Firstname Lastname</div>
+                                <div th:text="${comment.getMessage()}" class="mx-2">Тело комментария</div>
+                            </div>
+                        </div>
+                        <div sec:authorize="!isAuthenticated()">Необходимо зарегистрироваться, чтобы оставлять комментарии.</div>
+                        <div sec:authorize="isAuthenticated()">
+                            <form method="POST" th:action="@{/smarthouse}" th:object="${newComment}">
+                                <div>
+                                    <input type="hidden" value="Control Hubs" name="productName">
+                                    <textarea th:field="*{message}" rows="7" maxlength="700" minlength="5" placeholder="Напишите текст комментария здесь"
+                                              class="px-2" style="width: 100%"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-outline-info float-end">Отправить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="font-small blockquote-footer bg-light my-0 border-top">
+    <div class="container-fluid text-center pb-3">
+        © 2021: Данный сайт разработан исключительно в рамках курсового проекта и не предоставляет достоверной информации о продуктах Xiaomi.
+    </div>
+</footer>
+
+<script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

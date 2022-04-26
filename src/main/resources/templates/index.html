@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Добро пожаловать на сайт Xiaomi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <style>
+        .btn {
+            margin-top: 1px;
+            margin-bottom: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation menu -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a href="#" class="navbar-brand p-0">
+                <img src="images/logo/logo.png" width="30px" height="30px">
+                Xiaomi
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                    aria-controls="navbarContent" aria-expanded="false">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto nb-2">
+                   <li class="nav-item">
+                        <a th:href="@{/mobile-devices}" class="nav-link">
+                            <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Мобильные устройства</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a th:href="@{/smarthouse}" class="nav-link">
+                            <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Умные устройства</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                    <a th:href="@{/audio}" class="nav-link">
+                        <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Аудио</span>
+                    </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a th:href="@{/mi-tv}" class="nav-link">
+                            <span onmouseover="this.style.color='#ff7300'" onmouseout="this.style.color='#ffffff8c'">Mi TV</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div sec:authorize="!isAuthenticated()" class="d-flex">
+                    <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#authorizationForm">Войти</button>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <span sec:authentication="name" class="text-white fw-bolder me-5 float-end"></span>
+                </div>
+                <form sec:authorize="isAuthenticated()" method="POST" th:action="@{/logout}" class="d-flex" id="logoutButton">
+                    <button type="submit" class="btn btn-outline-danger">Выйти</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- End of navigation menu -->
+
+    <!-- Authorization form -->
+    <div class="modal fade" id="authorizationForm" tabindex="-1" aria-hidden="true" aria-labelledby="authFormLabel">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="authFormLabel">Авторизация</h5>
+                    <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pb-2">
+                    <form method="POST" th:action="@{/login}" id="loginForm">
+                        <div class="row mb-3">
+                            <label for="inputLogin" class="col-sm-2 col-form-label">Логин:</label>
+                            <div class="col-sm-9 ms-4">
+                                <input type="text" class="form-control" id="inputLogin" name="username">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="inputPassword" class="col-sm-2 col-form-label">Пароль:</label>
+                            <div class="col-sm-9 ms-4">
+                                <input type="password" class="form-control" id="inputPassword" name="password">
+                            </div>
+                        </div>
+                        <div class="row border-top mb-0 p-0">
+                            <div class="mt-2">
+                                <a th:href="@{/registration}" class="ms-1" style="font-size: small">Зарегистрировать аккаунт</a>
+                                <button type="submit" class="btn btn-outline-success float-end">Войти</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main>
+    <!-- Slider -->
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="margin-top: 56px">
+            <div class="carousel-inner">
+                <div class="carousel-item active" style="background-color: black">
+                    <img src="images/slider/xiaomi-pad5-black.jpg" class="d-block w-50" alt="">
+                </div>
+                <div class="carousel-item" style="background-color: #d9eee7">
+                    <img src="images/slider/xiaomi-12pro-green.jpg" class="d-block w-50" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="images/slider/xiaomi-notebook-pro15.jpg" class="d-block w-100" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="images/slider/xiaomi-hypercharge-black.jpg" class="d-block w-100" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img src="images/slider/xiaomi-smarthouse.jpg" class="d-block w-100" alt="">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <!-- Main content -->
+        <div class="container">
+
+            <div class="row">
+                <h5 class="mt-5 border py-2">
+                    Xiaomi — стремительно развивающаяся компания, производящая портативные электронные устройства и «разумную» бытовую технику.
+                    Xiaomi работает не так, как большинство китайских брендов электроники: есть подлинная философия дизайна,
+                    обеспечены высочайшие стандарты производства, разработана своя оригинальная оболочка для Android и, конечно же,
+                    постоянно ведется разработка собственных топовых технологий и железа, которые незамедлительно применяются в новейших гаджетах.
+                </h5>
+            </div>
+
+            <div class="row" id="XiaomiInRussia">
+                <h2 class="text-center mt-5">Xiaomi в России</h2>
+                <div class="col-5 ms-5">
+                    <a href="https://www.mi.com/ru/">
+                    <img src="images/about/mi-store.jpg" class="w-100">
+                    </a>
+                </div>
+                <div class="col-5">
+                    <a href="https://mi-shop.com/ru/">
+                    <img src="images/about/mi-shop.jpg" class="w-100">
+                    </a>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <h5 class="text-center mb-4">Ищите также продукцию Xiaomi в торговых сетях:</h5>
+                <div class="col-3">
+                    <a href="https://www.mvideo.ru/">
+                    <img src="images/about/dealers/mvideo-logo.jpg" class="w-100">
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a href="https://www.dns-shop.ru/">
+                    <img src="images/about/dealers/dns-logo.jpg" class="w-100">
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a href="https://www.svyaznoy.ru/">
+                    <img src="images/about/dealers/svyaznoy-logo.jpg" class="w-100">
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a href="https://www.citilink.ru/">
+                    <img src="images/about/dealers/citylink-logo.jpg" class="w-100">
+                    </a>
+                </div>
+            </div>
+
+            <div class="row mt-4 border">
+                <h2 class="text-center">История</h2>
+                <div class="col-9 mt-1">
+                Xiaomi была основана в 2010 году предпринимателем Lei Jun, который считал, что высококачественные технологии не должны стоить целое состояние.
+                И Xiaomi на деле воплощает эту ценность в соотношении высочайшего уровня качества продуктов с действительно невысокой ценой,
+                что практически сразу вывело молодую компанию по уровню продаж и популярности в один ряд с самыми известными мировыми производителями мобильных устройств.</br>
+
+                Xiaomi начала свою деятельность с разработки Android-прошивки MIUI, после чего переключилась на создание электроники.
+                Первый смартфон Mi 1 появился в 2011 году и превзошел многих конкурентов по своим характеристикам и цене, его оценило множество пользователей.
+                В третьем квартале 2014 года Xiaomi выходит на третье место в мире по продажам смартфонов после Samsung и Apple.
+                С каждым годом компания расширяет свой ассортимент, выпуская новую продукцию учитывая рынок и пожелания своих пользователей, приобретая все большее количество фанатов.
+                На данный момент компания выпускает ряд моделей смартфонов, телевизоров, фитнес браслетов, внешних аккумуляторов и ряд других популярных устройств.
+                </div>
+                <div class="col-3">
+                    <img src="images/about/xiaomi-mi1.jpg" class="w-100">
+                </div>
+            </div>
+
+            <div class="row mt-2 pb-3 border">
+                <h2 class="text-center">Логотип</h2>
+                <div class="col-2 mt-1">
+                    <img src="images/about/xiaomi-logo2.jpg" class="w-100">
+                </div>
+                <div class="col-10 mt-1">
+                В логотипе Xiaomi: «Mi» зашифровано словосочетание «Мобильный Интернет». Однако он также имеет и такое значение, как «Миссия Невыполнима» (Mission Impossible).
+                Второе значение логотипа обращается к истокам компании, в период, когда компания сталкивалась практически с непреодолимыми трудностями, которым,
+                команде Xiaomi удалось бросить вызов с первых же дней существования и прийти в итоге к невероятным успехам!
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="font-small blockquote-footer bg-light mt-3 mb-0 border-top">
+        <div class="container-fluid text-center pb-3">
+            © 2021: Данный сайт разработан исключительно в рамках курсового проекта и не предоставляет достоверной информации о продуктах Xiaomi.
+        </div>
+    </footer>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
